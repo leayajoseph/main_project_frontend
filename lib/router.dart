@@ -9,6 +9,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
           settings: routeSettings,
           builder:(_)=>const AuthScreen()
       );
+
     default:
       return MaterialPageRoute(
           settings: routeSettings,
