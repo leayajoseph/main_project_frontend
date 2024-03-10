@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:villagezone/features/auth/screens/forgetpassword.dart';
 import 'package:villagezone/features/auth/screens/signup.dart';
+import 'package:villagezone/features/home/screens/dashboard.dart';
+import 'package:villagezone/services/AuthService.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName='/auth-screen';
@@ -12,6 +15,28 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  TextEditingController ob1=new TextEditingController();
+  TextEditingController ob2=new TextEditingController();
+  void login() async{
+    final response=await UserAuthApiService().UserLogin(ob1.text, ob2.text);
+    if(response["status"]=="success")
+      {
+        String securityId=response["userdata"]["_id"].toString();
+        print("successfully login: "+securityId);
+        SharedPreferences.setMockInitialValues({});
+        SharedPreferences preferences=await SharedPreferences.getInstance();
+        preferences.setString("securityId", securityId);
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>DashBoard()));
+      }
+    else if(response["status"]=="invalid email")
+      {
+        print("invalid email id");
+      }
+    else
+      {
+        print("invalid password");
+      }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
             SizedBox(
               width: 400,
               child: TextField(
+                controller: ob1,
                decoration: InputDecoration(
                  prefixIcon: Icon(Icons.email_outlined),
                    border: OutlineInputBorder(),
@@ -51,6 +77,7 @@ class _AuthScreenState extends State<AuthScreen> {
             SizedBox(
               width: 400,
               child: TextField(
+                controller: ob2,
                 obscureText: true,
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock_outline),
@@ -78,10 +105,8 @@ class _AuthScreenState extends State<AuthScreen> {
             SizedBox(height: 30,),
             SizedBox(
               width: 200,
-              child: ElevatedButton(onPressed:()
-                  {
-
-                  }, child: Text("Continue"),
+              child: ElevatedButton(onPressed:login,
+                child: Text("Continue"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
                 foregroundColor: Colors.white,
