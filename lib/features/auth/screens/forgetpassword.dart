@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:villagezone/features/auth/screens/verification.dart';
 import 'package:villagezone/services/reset_password_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -21,6 +22,18 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification(
           otpHash: response.data,
         email: ob1.text)));
+      }
+    if(response.message=="Email not registered")
+      {
+        print("email not registered");
+        Fluttertoast.showToast(
+            msg: "email not registered",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            backgroundColor: Colors.teal,
+            fontSize: 16.0);
       }
   }
 

@@ -19,6 +19,10 @@ class ResetPasswordApiServce{
       {
         return resetPasswordModel(response.body);
       }
+    if(response.statusCode==404)
+      {
+        return resetPasswordModel(response.body);
+      }
     else
       {
         throw Exception("Failed");
