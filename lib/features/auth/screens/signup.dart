@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:villagezone/features/auth/screens/auth_screen.dart';
 import 'package:villagezone/services/AuthService.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -25,14 +25,8 @@ class _SignUpState extends State<SignUp> {
     if(response["status"]=="success")
       {
         print(("successfully added"));
-        Fluttertoast.showToast(msg: "Successfully registered",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            textColor: Colors.white,
-            backgroundColor: Colors.teal,
-            fontSize: 16.0
-        );
+
+
       }
     else
       {

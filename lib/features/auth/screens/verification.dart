@@ -15,7 +15,9 @@ class Verification extends StatefulWidget {
 class _VerificationState extends State<Verification> {
 
   TextEditingController ob1=new TextEditingController();
+  String invalid_otp="";
   void otp_verify()async{
+    invalid_otp="";
     final response=await ResetPasswordApiServce().verifyOtp(widget.email!, widget.otpHash!, ob1.text);
     if(response.data!=null)
       {
@@ -26,6 +28,9 @@ class _VerificationState extends State<Verification> {
     else
       {
         print("Invalid otp");
+        setState(() {
+          invalid_otp="Invalid OTP";
+        });
       }
 
   }
@@ -34,48 +39,51 @@ class _VerificationState extends State<Verification> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset("assets/img2.svg",height: 300,width: 300,alignment: Alignment.center,),
-              SizedBox(height: 10,),
-              SizedBox(
-                width: 400,
-                child: TextField(
-                  controller: ob1,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.verified_outlined),
-                      hintText: 'verification code',
-                      border: OutlineInputBorder(),
-                      labelText: '',
-                      fillColor: Colors.grey,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      )
+        body: SingleChildScrollView(
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset("assets/img2.svg",height: 300,width: 300,alignment: Alignment.center,),
+                SizedBox(height: 10,),
+                SizedBox(
+                  width: 400,
+                  child: TextField(
+                    controller: ob1,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.verified_outlined),
+                        hintText: 'verification code',
+                        border: OutlineInputBorder(),
+                        labelText: '',
+                        fillColor: Colors.grey,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                        )
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 10,),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(onPressed:otp_verify, child: Text("Continue"),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                      )
-
-                  ),),
-              ),
-            ],
+                Text("$invalid_otp",style: TextStyle(color: Colors.red),),
+                SizedBox(height: 10,),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(onPressed:otp_verify, child: Text("Continue"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)
+                        )
+          
+                    ),),
+                ),
+              ],
+            ),
           ),
         ),
       ),
