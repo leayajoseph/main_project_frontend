@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,7 +6,6 @@ import 'package:villagezone/features/auth/screens/forgetpassword.dart';
 import 'package:villagezone/features/auth/screens/signup.dart';
 import 'package:villagezone/features/home/screens/dashboard.dart';
 import 'package:villagezone/services/AuthService.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName='/auth-screen';
@@ -18,7 +18,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController ob1=new TextEditingController();
   TextEditingController ob2=new TextEditingController();
+  String invalid_email="";
+  String invalid_password="";
   void login() async{
+    invalid_email="";
+    invalid_password="";
     final response=await UserAuthApiService().UserLogin(ob1.text, ob2.text);
     if(response["status"]=="success")
       {
@@ -32,26 +36,20 @@ class _AuthScreenState extends State<AuthScreen> {
     else if(response["status"]=="invalid email")
       {
         print("invalid email id");
-        Fluttertoast.showToast(
-            msg: "Invalid email",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            textColor: Colors.white,
-            backgroundColor: Colors.teal,
-            fontSize: 16.0);
+        setState(() {
+          invalid_email="Invalid email";
+        });
+
+
       }
     else
       {
         print("invalid password");
-        Fluttertoast.showToast(
-            msg: "Invalid password",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            textColor: Colors.white,
-            backgroundColor: Colors.teal,
-            fontSize: 16.0);
+        setState(() {
+          invalid_password="Invalid password";
+        });
+
+
       }
   }
   @override
@@ -91,6 +89,8 @@ class _AuthScreenState extends State<AuthScreen> {
                  ),
                 ),
               ),
+              Text("$invalid_email",
+              style: TextStyle(color: Colors.red),),
               SizedBox(height: 20,),
               SizedBox(
                 width: 400,
@@ -113,6 +113,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
+              Text("$invalid_password",style: TextStyle(color: Colors.red),),
               SizedBox(height: 20,),
               GestureDetector(
                 child: Text("Forget password?"),
