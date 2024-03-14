@@ -5,6 +5,7 @@ import 'package:villagezone/features/auth/screens/forgetpassword.dart';
 import 'package:villagezone/features/auth/screens/signup.dart';
 import 'package:villagezone/features/home/screens/dashboard.dart';
 import 'package:villagezone/services/AuthService.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName='/auth-screen';
@@ -31,10 +32,26 @@ class _AuthScreenState extends State<AuthScreen> {
     else if(response["status"]=="invalid email")
       {
         print("invalid email id");
+        Fluttertoast.showToast(
+            msg: "Invalid email",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            backgroundColor: Colors.teal,
+            fontSize: 16.0);
       }
     else
       {
         print("invalid password");
+        Fluttertoast.showToast(
+            msg: "Invalid password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            backgroundColor: Colors.teal,
+            fontSize: 16.0);
       }
   }
   @override

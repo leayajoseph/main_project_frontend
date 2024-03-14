@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:villagezone/services/reset_password_service.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -20,6 +21,15 @@ class _ResetPasswordState extends State<ResetPassword> {
         if(response["message"]=="Success")
           {
             print("Success");
+            Fluttertoast.showToast(
+                msg: "Success",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                backgroundColor: Colors.teal,
+                fontSize: 16.0
+            );
           }
         else
           {
