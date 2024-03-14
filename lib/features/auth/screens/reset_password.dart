@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:villagezone/features/auth/screens/verification.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:villagezone/services/reset_password_service.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class ResetPassword extends StatefulWidget {
+  final String? email;
+  const ResetPassword({super.key,this.email});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
-  String email='';
-  bool isApiCallProcess=false;
+class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController ob1=new TextEditingController();
-  void otp_email()async{
-    final response=await ResetPasswordApiServce().otpLogin(ob1.text);
-    if(response.data!=null)
+  TextEditingController ob2=new TextEditingController();
+  void change_password() async{
+    if(ob1.text == ob2.text)
       {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification(
-          otpHash: response.data,
-        email: ob1.text)));
+        final response=await ResetPasswordApiServce().changePassword(widget.email!, ob1.text);
+        if(response["message"]=="Success")
+          {
+            print("Success");
+          }
+        else
+          {
+            print("Failed");
+          }
       }
   }
 
@@ -37,20 +41,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             children: [
               SvgPicture.asset("assets/img2.svg",height: 300,width: 300,alignment: Alignment.center,),
               SizedBox(height: 10,),
-              Text("Enter email id",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w500
-              ),),
-              SizedBox(height: 10,),
               SizedBox(
                 width: 400,
                 child: TextField(
                   controller: ob1,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email_outlined),
                       border: OutlineInputBorder(),
-                      hintText: 'email',
+                      prefixIcon: Icon(Icons.lock_outline),
+                      hintText: 'new password',
                       labelText: '',
                       fillColor: Colors.grey,
                       focusedBorder: OutlineInputBorder(
@@ -64,12 +62,30 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
               SizedBox(height: 10,),
-              Text("We'll send a verification code to this email"),
+              SizedBox(
+                width: 400,
+                child: TextField(
+                  controller: ob2,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock_reset_outlined),
+                      hintText: 'confirm password',
+                      labelText: '',
+                      fillColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                      )
+                  ),
+                ),
+              ),
               SizedBox(height: 30,),
               SizedBox(
                 width: 200,
-                child: ElevatedButton(onPressed:otp_email,
-                  child: Text("Continue"),
+                child: ElevatedButton(onPressed:change_password, child: Text("Continue"),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
                       foregroundColor: Colors.white,
