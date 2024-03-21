@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:villagezone/features/auth/screens/forgetpassword.dart';
 import 'package:villagezone/features/auth/screens/signup.dart';
+import 'package:villagezone/features/home/screens/bottom_nav.dart';
 import 'package:villagezone/features/home/screens/dashboard.dart';
 import 'package:villagezone/services/AuthService.dart';
 
@@ -31,7 +32,7 @@ class _AuthScreenState extends State<AuthScreen> {
         SharedPreferences.setMockInitialValues({});
         SharedPreferences preferences=await SharedPreferences.getInstance();
         preferences.setString("securityId", securityId);
-        Navigator.push(context, MaterialPageRoute(builder:(context)=>DashBoard()));
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>BottomNavBar()));
       }
     else if(response["status"]=="invalid email")
       {
