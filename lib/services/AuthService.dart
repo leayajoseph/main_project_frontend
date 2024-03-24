@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:villagezone/models/AuthModel.dart';
+import 'package:villagezone/models/UserModel.dart';
 
 class UserAuthApiService
 {
@@ -51,5 +53,16 @@ class UserAuthApiService
       {
         throw Exception("Failed to send data");
       }
+  }
+  Future<UserDetails?> getUserDetails(String userId) async{
+    var apiUrl=Uri.parse("http://192.168.29.217:3001/api/user/user_account?user_id=$userId");
+    var response=await http.get(apiUrl);
+    if(response.statusCode==200)
+      {
+        return UserDetails.fromJson(jsonDecode(response.body));
+      }
+    else{
+      throw Exception("failed to load user details");
+    }
   }
 }
