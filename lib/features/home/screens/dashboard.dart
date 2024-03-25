@@ -88,7 +88,7 @@ class _DashBoardState extends State<DashBoard> {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             String img_url =
-                                "http://192.168.29.217:3001/" +
+                                "http://192.168.43.30:3001/" +
                                     snapshot.data![index].categoryIcon
                                         .toString();
                             return GestureDetector(

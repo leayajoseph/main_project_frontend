@@ -136,13 +136,18 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           SizedBox(height: 20,),
                           Row(
-
                             children: [
                               Icon(Icons.home),
                               SizedBox(width: 50,),
-                              Text(
-                                '${_userDetails.address}',
-                                style: TextStyle(fontSize: 18),
+                              Column( // Display address line by line
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: _userDetails.address.split(',').map((line) {
+                                  return Row(
+                                    children: [
+                                      Text(line.trim(), style: TextStyle(fontSize: 18)),
+                                    ],
+                                  );
+                                }).toList(),
                               ),
                             ],
                           ),

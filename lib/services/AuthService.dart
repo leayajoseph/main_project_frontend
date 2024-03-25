@@ -10,7 +10,7 @@ class UserAuthApiService
       String email,String password
       )async{
     var client=http.Client();
-    var apiUrl=Uri.parse("http://192.168.29.217:3001/api/auth/login");
+    var apiUrl=Uri.parse("http://192.168.43.30:3001/api/auth/login");
     var response=await client.post(apiUrl,
     headers:<String,String>{
       "Content-Type":"application/json ; charset=UTF-8"
@@ -32,7 +32,7 @@ class UserAuthApiService
       String email, String password, String name, String phone, String address, String pincode
       ) async{
     var client=http.Client();
-    var apiUrl=Uri.parse("http://192.168.29.217:3001/api/auth/signup");
+    var apiUrl=Uri.parse("http://192.168.43.30:3001/api/auth/signup");
     var response=await client.post(apiUrl,
     headers: <String,String>{
       "Content-Type":"application/json; charset=UTF-8"
@@ -55,7 +55,7 @@ class UserAuthApiService
       }
   }
   Future<UserDetails?> getUserDetails(String userId) async{
-    var apiUrl=Uri.parse("http://192.168.29.217:3001/api/user/user_account?user_id=$userId");
+    var apiUrl=Uri.parse("http://192.168.43.30:3001/api/user/user_account?user_id=$userId");
     var response=await http.get(apiUrl);
     if(response.statusCode==200)
       {

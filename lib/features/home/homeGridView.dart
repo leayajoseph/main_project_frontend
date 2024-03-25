@@ -45,7 +45,7 @@ class _GridViewHomeState extends State<GridViewHome> {
                   List<String> imagePaths =
                   snapshot.data![index].productImg.split(',');
                   List<String> fullImagePaths = imagePaths
-                      .map((path) => "http://192.168.29.217:3001/$path")
+                      .map((path) => "http://192.168.43.30:3001/$path")
                       .toList();
                   return InkWell(
                     onTap: () {},
