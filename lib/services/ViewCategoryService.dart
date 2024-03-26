@@ -5,7 +5,7 @@ class CategoryApiService
 {
  Future<List<ViewCategory>> getCategory() async{
    var client=http.Client();
-   var apiUrl=Uri.parse("http://192.168.43.30:3001/api/category/viewcategory");
+   var apiUrl=Uri.parse("http://192.168.29.217:3001/api/category/viewcategory");
    var response=await client.get(apiUrl);
    if(response.statusCode==200)
      {
