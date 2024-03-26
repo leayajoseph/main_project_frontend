@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:villagezone/features/auth/screens/auth_screen.dart';
+import 'package:villagezone/features/home/screens/update_profile.dart';
 import 'package:villagezone/models/UserModel.dart';
 import 'package:villagezone/services/AuthService.dart';
 
@@ -44,6 +46,12 @@ class _AccountPageState extends State<AccountPage> {
       });
       // Handle error: failed to load user details
     });
+  }
+
+  void _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('securityId'); // Remove the stored user ID
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>AuthScreen())); // Navigate to login screen
   }
 
 
@@ -169,9 +177,20 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                     ),
                     SizedBox(height: 10,),
-                    ElevatedButton(onPressed:(){}, child: Text("Edit Profile")),
+                    ElevatedButton(onPressed:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                      UpdateProfile(
+                        userid: _userDetails.id,
+                        email: _userDetails.email,
+                        name: _userDetails.name,
+                        phone: _userDetails.phone,
+                        address: _userDetails.address,
+                        pincode: _userDetails.pincode
+                      )));
+                    }, child: Text("Edit Profile")),
                     SizedBox(height: 10,),
-                    ElevatedButton(onPressed:(){}, child: Text("Logout"))
+                    ElevatedButton(onPressed: _logout,
+                        child: Text("Logout"))
                   ],
                 ),
               ),
